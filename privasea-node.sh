@@ -73,7 +73,7 @@ docker images | grep -q "privasea/acceleration-node-beta" || docker pull privase
 echo "Membuat keystore baru..."
 
 # Menjalankan perintah untuk membuat keystore baru
-docker run -it -v "$HOME/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore
+docker run -v "$HOME/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore
 
 # Step 6: Deteksi otomatis nama file keystore
 keystore_file=$(ls $HOME/privasea/config | grep "UTC" | head -n 1)
