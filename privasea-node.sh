@@ -2,20 +2,29 @@
 
 curl -s https://data.zamzasalim.xyz/file/uploads/asclogo.sh | bash
 sleep 5
+# Warna output
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+RED='\033[0;31m'
+NC='\033[0m'
+
 # Fungsi untuk menampilkan pesan sukses
 function success_message {
-    echo "[✔] $1"
+    echo -e "${GREEN}[✔] $1${NC}"
 }
 
 # Fungsi untuk menampilkan pesan proses
 function info_message {
-    echo "[-] $1..."
+    echo -e "${CYAN}[-] $1...${NC}"
 }
 
 # Fungsi untuk menampilkan pesan kesalahan
 function error_message {
-    echo "[✘] $1"
+    echo -e "${RED}[✘] $1${NC}"
 }
+
+# Pembersihan layar
+clear
 
 # Langkah 1: Pengecekan apakah Docker sudah terpasang
 if ! command -v docker &> /dev/null
@@ -46,8 +55,6 @@ fi
 
 echo ""
 
-sudo groupadd docker && sudo usermod -aG docker $(whoami) && newgrp docker
-
 # Langkah 2: Tarik gambar Docker
 info_message "Mengunduh gambar Docker"
 if docker pull privasea/acceleration-node-beta:latest; then
@@ -72,7 +79,8 @@ echo ""
 
 # Langkah 4: Buat file keystore
 info_message "Membuat file keystore"
-if echo "$KEystorePassword" | docker run -v "$HOME/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore; then
+if docker run -it -v "$HOME/privasea/config:/app/config" \
+privasea/acceleration-node-beta:latest ./node-calc new_keystore; then
     success_message "File keystore berhasil dibuat"
 else
     error_message "Gagal membuat file keystore"
@@ -95,7 +103,7 @@ echo ""
 # Langkah 6: Pilihan untuk melanjutkan atau tidak
 read -p "Apakah Anda ingin melanjutkan untuk menjalankan node (y/n)? " choice
 if [[ "$choice" != "y" ]]; then
-    echo "Proses dibatalkan."
+    echo -e "${CYAN}Proses dibatalkan.${NC}"
     exit 0
 fi
 
@@ -118,6 +126,8 @@ fi
 echo ""
 
 # Langkah akhir
-echo "File konfigurasi tersedia di: $HOME/privasea/config"
-echo "Keystore disimpan sebagai: wallet_keystore"
-echo "Password Keystore yang digunakan: $KEystorePassword"
+echo ""
+echo -e "${CYAN}File konfigurasi tersedia di:${NC} $HOME/privasea/config"
+echo -e "${CYAN}Keystore disimpan sebagai:${NC} wallet_keystore"
+echo -e "${CYAN}Password Keystore yang digunakan:${NC} $KEystorePassword"
+echo ""
