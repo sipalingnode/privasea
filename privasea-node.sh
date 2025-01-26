@@ -73,14 +73,15 @@ docker images | grep -q "privasea/acceleration-node-beta" || docker pull privase
 echo "Membuat keystore baru..."
 
 # Menjalankan perintah untuk membuat keystore baru
-docker run -it -v "/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore
+docker run -it -v "$HOME/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore
 
 # Step 6: Deteksi otomatis nama file keystore
 keystore_file=$(ls $HOME/privasea/config | grep "UTC" | head -n 1)
 
+sleep 3
+
 # Step 7: Ganti nama file keystore menjadi wallet_keystore
-cp $HOME/privasea/config/$keystore_file $HOME/privasea/config/wallet_keystore
-rm $HOME/privasea/config/$keystore_file
+mv $HOME/privasea/config/$keystore_file $HOME/privasea/config/wallet_keystore
 
 # Langkah 8: Pilihan untuk melanjutkan atau tidak
 read -p "Apakah Anda ingin melanjutkan untuk menjalankan node (y/n)? " choice
