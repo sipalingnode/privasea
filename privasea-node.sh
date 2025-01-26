@@ -79,7 +79,8 @@ docker run -it -v "/privasea/config:/app/config" privasea/acceleration-node-beta
 keystore_file=$(ls $HOME/privasea/config | grep "UTC" | head -n 1)
 
 # Step 7: Ganti nama file keystore menjadi wallet_keystore
-mv $HOME/privasea/config/$keystore_file $HOME/privasea/config/wallet_keystore
+cp $HOME/privasea/config/$keystore_file $HOME/privasea/config/wallet_keystore
+rm $HOME/privasea/config/$keystore_file
 
 # Langkah 8: Pilihan untuk melanjutkan atau tidak
 read -p "Apakah Anda ingin melanjutkan untuk menjalankan node (y/n)? " choice
