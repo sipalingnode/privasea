@@ -46,6 +46,8 @@ fi
 
 echo ""
 
+sudo groupadd docker && sudo usermod -aG docker $(whoami) && newgrp docker
+
 # Langkah 2: Tarik gambar Docker
 info_message "Mengunduh gambar Docker"
 if docker pull privasea/acceleration-node-beta:latest; then
