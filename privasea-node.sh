@@ -72,8 +72,7 @@ echo ""
 
 # Langkah 4: Buat file keystore
 info_message "Membuat file keystore"
-if docker run -it -v "$HOME/privasea/config:/app/config" \
-privasea/acceleration-node-beta:latest ./node-calc new_keystore; then
+if docker run -v "$HOME/privasea/config:/app/config" privasea/acceleration-node-beta:latest ./node-calc new_keystore; then
     success_message "File keystore berhasil dibuat"
 else
     error_message "Gagal membuat file keystore"
